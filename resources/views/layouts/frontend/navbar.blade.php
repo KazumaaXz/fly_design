@@ -20,11 +20,20 @@
                         <li class="nav-item me-3">
                             <a class="nav-link text-dark" href="./materi.html">Materi</a>
                         </li>
+                        <li class="nav-item me-2">
+                            <a class="nav-link @yield('articlesActive')"
+                                href="{{ route('home.articles.index') }}">{{ __('Blog') }}</a>
+                        </li>
+                        <li class="nav-item me-2">
+                            <a class="nav-link @yield('informationActive')"
+                                href="{{ route('home.information.index') }}">{{ __('Informasi') }}</a>
+                        </li>
                         <li class="nav-item me-3">
                             <a class="nav-link text-dark" href="./pengajar.html">Pengajar</a>
                         </li>
                         <li class="nav-item me-3">
-                            <a class="nav-link text-dark" href="./contact.html">Contact us</a>
+                            <a class="nav-link @yield('contactActive')"
+                                href="{{ route('home.contact.index') }}">{{ __('Kontak') }}</a>
                         </li>
                         @guest
                             @if (Route::has('login'))

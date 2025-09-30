@@ -181,14 +181,14 @@
     </section>
 
     <!-- Call to Action Section -->
-    <hr class="my-4">
+    <hr class="my-5">
     <div class="row gx-4">
-        <h4 class="display-6 fw-bold text-center mb-5 text-dark">Product Terbaru</h4>
+        <h4 class="mb-4 fw-bold text-center">Artikel Terbaru</h4>
         <div class="col-lg-9 mx-auto">
             <div class="row">
-                @forelse ($products as $key => $val)
+                @forelse ($articles as $key => $val)
                     {{-- Skip the first article as it's used for featured --}}
-                    @if ($key == 0 && !empty($products) && count($products) > 0)
+                    @if ($key == 0 && !empty($articles) && count($articles) > 0)
                         @continue
                     @endif
                     <div class="col-md-4 mb-4">
@@ -209,8 +209,8 @@
                                 <p class="card-text flex-grow-1">
                                     <small>{{ Str::limit(strip_tags($val->meta_desc), 120) }}</small>
                                 </p>
-                                <a href="{{-- route('home.products.show', $val->slug) --}}" class="btn btn-sm btn-primary mt-1 rounded-pill">Baca
-                                    Product</a>
+                                <a href="{{ route('home.articles.show', $val->slug) }}" class="btn btn-sm btn-primary mt-1 rounded-pill">Baca
+                                    Artikel</a>
                             </div>
                             <div class="card-footer text-center">
                                 <small class="text-muted">Diperbaharui:

@@ -41,14 +41,16 @@
                                 href="{{ route('admin.jenis_product.index') }}">{{ __('Type') }}</a>
                         </li>
                     </ul>
-                </li>
-
-                <li class="nav-item">
-                    <a class="nav-link @yield('usersActive')"
+                    <li class="nav-item">
+                        <a class="nav-link @yield('inboxActive')" href="{{route('admin.inbox.index')}}">{{ __('Inbox') }}</a>
+                    </li>
+                     </li>
+                    <li class="nav-item">
+                         <a class="nav-link @yield('usersActive')"
                         href="{{ route('admin.users.index') }}">{{ __('Pengguna') }}</a>
-                </li>
-            </ul>
-
+                     </li>
+                 </ul>
+            
             <ul class="navbar-nav ms-auto">
                 <li class="nav-item dropdown">
                     <a id="navbarDropdown" class="nav-link dropdown-toggle fw-bold text-primary" href="#"

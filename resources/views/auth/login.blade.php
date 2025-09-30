@@ -149,7 +149,7 @@
     <div class="container login-container">
         <div class="row g-0">
             <div class="col-lg-6 illustration-section d-none d-lg-flex">
-                <img src="img/desain-grafis.jpg" alt="Grafis Illustration">
+                <img src="assets/img/desain-grafis.jpg" alt="Grafis Illustration">
             </div>
             <div class="col-lg-6 form-section">
                 <h1>Selamat Datang</h1>
