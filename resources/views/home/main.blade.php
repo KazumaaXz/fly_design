@@ -12,11 +12,53 @@
             <p class="lead mb-4 mx-auto" style="max-width: 600px;">
                 Kuasai Desain Web Modern, dari Nol hingga Mahir!
             </p>
-            <!-- Hero Image -->
-            <div class="mx-auto rounded-3 overflow-hidden shadow-lg" style="max-width: 800px;">
-                <img src="img/menarik.jpg" alt="Ilustrasi laptop dengan desain web atau tools desain grafis"
-                    class="img-fluid hero-image">
+
+            <!-- Hero Carousel -->
+            <div id="heroCarousel" class="carousel slide mx-auto rounded-3 overflow-hidden shadow-lg" data-bs-ride="carousel"
+                style="max-width: 800px;">
+                <div class="carousel-inner">
+                    <!-- Slide 1 -->
+                    <div class="carousel-item active">
+                        <div class="ratio ratio-16x9">
+                            <img src="{{ asset('assets/img/1.jpg') }}" class="d-block w-100 object-fit-cover"
+                                alt="Ilustrasi web modern">
+                        </div>
+                    </div>
+                    <!-- Slide 2 -->
+                    <div class="carousel-item">
+                        <div class="ratio ratio-16x9">
+                            <img src="{{ asset('assets/img/2.jpeg') }}" class="d-block w-100 object-fit-cover"
+                                alt="Ilustrasi web modern">
+                        </div>
+                    </div>
+                    <!-- Slide 3 -->
+                    <div class="carousel-item">
+                        <div class="ratio ratio-16x9">
+                            <img src="{{ asset('assets/img/3.jpg') }}" class="d-block w-100 object-fit-cover"
+                                alt="Ilustrasi web modern">
+                        </div>
+                    </div>
+                    <!-- Slide 4 -->
+                    <div class="carousel-item">
+                        <div class="ratio ratio-16x9">
+                            <img src="{{ asset('assets/img/4.jpeg') }}" class="d-block w-100 object-fit-cover"
+                                alt="Ilustrasi web modern">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tombol Next & Prev -->
+                <button class="carousel-control-prev" type="button" data-bs-target="#heroCarousel" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon"></span>
+                    <span class="visually-hidden">Sebelumnya</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#heroCarousel" data-bs-slide="next">
+                    <span class="carousel-control-next-icon"></span>
+                    <span class="visually-hidden">Berikutnya</span>
+                </button>
             </div>
+
+            <!-- Call to Action Button -->
             <a href="#daftar" class="btn btn-light btn-lg mt-4 fw-semibold btn-cta-custom">
                 Daftar Sekarang
             </a>
@@ -209,7 +251,8 @@
                                 <p class="card-text flex-grow-1">
                                     <small>{{ Str::limit(strip_tags($val->meta_desc), 120) }}</small>
                                 </p>
-                                <a href="{{ route('home.articles.show', $val->slug) }}" class="btn btn-sm btn-primary mt-1 rounded-pill">Baca
+                                <a href="{{ route('home.articles.show', $val->slug) }}"
+                                    class="btn btn-sm btn-primary mt-1 rounded-pill">Baca
                                     Artikel</a>
                             </div>
                             <div class="card-footer text-center">
@@ -281,7 +324,7 @@
         </section>
 
         <!-- Bootstrap 5 JavaScript CDN (Popper.js and Bootstrap JS) -->
-        <script src"{{ asset('assets/js/bootstrap.min.js') }}"></script>
+        <script src="{{ asset('assets/js/bootstrap.min.js') }}"></script>
         </body>
 
         </html>

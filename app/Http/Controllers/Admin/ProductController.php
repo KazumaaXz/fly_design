@@ -53,17 +53,16 @@ class ProductController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'user_id' => 'required|exists:users,id',
             'type_id' => 'required|exists:types,id',
             'title' => 'required|string|max:255',
-            'meta_desc' => 'nullable|string|max:255',
             'description' => 'required|string',
-            'image' => 'nullable|image|mimes:jpeg,jpg,png,webp|max:2048',
-            'status' => 'nullable|boolean',
+            'meta_desc' => 'nullable|string|max:255',
             'price' => 'required|numeric|min:0',
             'discount' => 'nullable|numeric|min:0|max:100',
             'stock' => 'required|integer|min:0',
             'sku' => 'nullable|string|unique:products,sku|max:255',
+            'image' => 'nullable|image|mimes:jpeg,jpg,png,webp|max:2048', // Perhatikan, di sini hanya satu gambar
+            'status' => 'nullable|boolean',
         ]);
 
         $imagePath = null;
@@ -71,13 +70,12 @@ class ProductController extends Controller
             $imagePath = $request->file('image')->store('products', 'public');
         }
 
-
         Product::create([
             'user_id' => Auth::id(), // ID user yang login
             'type_id' => $request->type_id,
             'title' => $request->title,
-            'meta_desc' => $request->meta_desc,
             'slug' => Str::slug($request->title),
+            'meta_desc' => $request->meta_desc,
             'description' => $request->description,
             'image' => $imagePath,
             'status' => $request->boolean('status', false),

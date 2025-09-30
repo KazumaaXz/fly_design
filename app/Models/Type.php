@@ -10,16 +10,8 @@ class Type extends Model
     use HasFactory;
 
    protected $fillable = [
-    'title',
-    'meta_desc',
+    'name',
     'slug',
-    'description',
-    'price',
-    'discount',
-    'stock',
-    'sku',
-    'image',
-    'status',
 ];
     /**
      * Get the route key name for model binding.
@@ -34,7 +26,7 @@ class Type extends Model
     // Relasi ke produk
     public function products()
     {
-        return $this->hasMany(Product::class);
+        return $this->hasMany(Product::class, 'type_id');
     }
        
 }

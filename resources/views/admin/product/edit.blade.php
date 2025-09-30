@@ -46,10 +46,10 @@
                             <div class="col-lg-6 mb-2">
                                 <label for="type_id" class="form-label">Kategori</label>
                                 <select name="type_id" class="form-select @error('type_id') is-invalid @enderror" required>
-                                    @foreach ($categories as $category)
-                                        <option value="{{ $category->id }}"
-                                            {{ old('type_id', $product->type_id) == $category->id ? 'selected' : '' }}>
-                                            {{ $category->name }}
+                                    @foreach ($types as $type)
+                                        <option value="{{ $type->id }}"
+                                            {{ old('type_id', $product->type_id) == $type->id ? 'selected' : '' }}>
+                                            {{ $type->name }}
                                         </option>
                                     @endforeach
                                 </select>

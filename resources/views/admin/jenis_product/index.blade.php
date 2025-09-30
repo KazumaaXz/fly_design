@@ -109,12 +109,47 @@
             ],
             labels: [
                 @foreach ($types as $val)
-                    "{{ $val->Type }}",
+                    "{{ $val->name }}",
                 @endforeach
             ],
             dataLabels: {
-                enabled: false
+                enabled: true,
+                style: {
+                    fontSize: '12px'
+                }
             },
+            legend: {
+                position: 'bottom',
+                horizontalAlign: 'center'
+            },
+            colors: [
+                '#1E90FF', // biru
+                '#28a745', // hijau
+                '#ffc107', // kuning
+                '#dc3545', // merah
+                '#6f42c1', // ungu
+                '#20c997', // teal
+                '#fd7e14', // oranye
+                '#0dcaf0'  // cyan
+            ],
+            plotOptions: {
+                pie: {
+                    donut: {
+                        size: '65%',
+                        labels: {
+                            show: true,
+                            total: {
+                                show: true,
+                                label: 'Total Produk',
+                                fontSize: '14px',
+                                formatter: function (w) {
+                                    return w.globals.seriesTotals.reduce((a, b) => a + b, 0)
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         };
 
         var chart = new ApexCharts(document.querySelector("#myChart"), options);

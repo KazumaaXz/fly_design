@@ -5,7 +5,7 @@
 @endsection
 
 @section('content')
-    <h1 class="mb-4" style="font-size:x-large">Manajemen Artikel</h1>
+    <h1 class="mb-4" style="font-size:x-large">Manajemen Inbox</h1>
     <hr><br>
 
     <div class="row">

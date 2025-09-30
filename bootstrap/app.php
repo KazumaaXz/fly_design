@@ -14,6 +14,7 @@ return Application::configure(basePath: dirname(__DIR__))
         // Daftarkan middleware alias di sini
         $middleware->alias([
             'role' => \App\Http\Middleware\CheckUserRole::class,
+            'check' => \App\Http\Middleware\RedirectIfAuthenticated::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {

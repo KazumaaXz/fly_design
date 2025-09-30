@@ -7,9 +7,14 @@ use App\Models\Category;
 use App\Models\Information;
 use Illuminate\Http\Request;
 use App\Models\Contact;
+use App\Models\Product;
+use App\Models\Type;
+use App\Models\User;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Validation\ValidationException;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class HomeController extends Controller
 {
@@ -20,6 +25,12 @@ class HomeController extends Controller
         $categories = Category::all();
 
         return view('home.main', compact('articles', 'categories'));
+    }
+
+    public function about()
+    {
+        $categories = Category::all();
+        return view('home.about.index', compact('categories'));
     }
 
     // controller untuk article
@@ -150,5 +161,108 @@ class HomeController extends Controller
             Session::flash('error', 'Terjadi kesalahan saat mengirim pesan: ' . $e->getMessage());
             return redirect()->back()->withInput();
         }
+    }
+
+    // controller untuk team
+    public function team(Request $request)
+    {
+        $team = User::where('role', 'author')->latest()->paginate(9);
+
+        $categories = Category::all();
+
+        return view('home.page.team', compact('team', 'categories'));
+    }
+
+    // controller untuk product
+    public function products(Request $request)
+    {
+        $query = product::where('status', true)->latest();
+
+        // Cek apakah ada parameter 'search' dalam request
+        if ($request->has('search')) {
+            $searchTerm = $request->search;
+            // Tambahkan kondisi pencarian berdasarkan nama atau email
+            $query->where(function ($q) use ($searchTerm) {
+                $q->where('title', 'like', '%' . $searchTerm . '%');
+            });
+        }
+
+        // Ambil hasil paginasi
+        $products = $query->paginate(8);
+
+        $types = Type::all();
+        $sidebar = Information::latest()->limit(5)->get();
+
+        return view('home.products.index', compact('products', 'types', 'sidebar'));
+    }
+
+    public function productsShow($slug)
+    {
+        // Mengambil produk utama berdasarkan slug
+        $product = Product::where('slug', $slug)->firstOrFail();
+
+        // Mengambil produk terkait berdasarkan type_id yang sama
+        // dan mengecualikan produk yang sedang ditampilkan
+        $relatedProducts = Product::where('type_id', $product->type_id)
+            ->where('id', '!=', $product->id) // Pastikan produk yang sedang dilihat tidak ikut
+            ->inRandomOrder() // Ambil secara acak
+            ->limit(3) // Batasi hingga 3 produk terkait
+            ->get();
+
+        // Mengirimkan semua data ke view
+        return view('home.products.show', compact('product', 'relatedProducts'));
+    }
+
+    public function productsTypes($typeId)
+    {
+        // Mengambil artikel yang memiliki type_id yang sesuai
+        $products = Product::where('type_id', $typeId)
+            ->where('status', true)
+            ->latest()
+            ->paginate(8);
+
+        $types = Type::all();
+        $sidebar = Information::latest()->limit(5)->get();
+
+        return view('home.products.index', compact('products', 'types', 'sidebar'));
+    }
+
+    public function userDashboard()
+    {
+        return view('user.dashboard');
+    }
+// Menampilkan halaman profile
+    public function profile()
+    {
+        $user = Auth::user(); // ambil data user login
+        return view('user.profile', compact('user'));
+    }
+
+    // Update profile
+    public function updateProfile(Request $request)
+    {
+        $user = Auth::user();
+
+        // Validasi data
+        $request->validate([
+            'name'   => 'required|string|max:255',
+            'email'  => 'required|email|unique:users,email,' . $user->id,
+            'phone'  => 'nullable|string|max:20',
+            'password' => 'nullable|min:6|confirmed',
+        ]);
+
+        // Update field dasar
+        $user->name  = $request->name;
+        $user->email = $request->email;
+        $user->phone = $request->phone;
+
+        // Jika ganti password
+        if ($request->filled('password')) {
+            $user->password = Hash::make($request->password);
+        }
+
+        $user->save();
+
+        return redirect()->route('user.profile')->with('success', 'Profil berhasil diperbarui.');
     }
 }

@@ -13,6 +13,7 @@ use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Str;
 use Laravel\Fortify\Actions\RedirectIfTwoFactorAuthenticatable;
 use Laravel\Fortify\Fortify;
+use Illuminate\Support\Facades\Route;
 
 class FortifyServiceProvider extends ServiceProvider
 {
@@ -45,13 +46,42 @@ class FortifyServiceProvider extends ServiceProvider
             return Limit::perMinute(5)->by($request->session()->get('login.id'));
         });
 
+        // login and register
+        Route::middleware(['web', 'check'])->group(function() {
+            Fortify::loginView(fn() => view('auth/login'));
+            Fortify::registerView(fn() => view('auth/register'));
+        });
+
         //login
-         Fortify::loginView(function(){
-            return view('auth/login');	//return view menggunakan blade 
-         });
+        //  Fortify::loginView(function(){
+        //     return view('auth/login');	//return view menggunakan blade 
+        //  });
 
         //logout
          $this->app->singleton(\Laravel\Fortify\Contracts\LogoutResponse::class,
          \App\Http\Responses\LogoutResponse::class);
+
+        // login
+        $this->app->singleton(
+            \Laravel\Fortify\Contracts\LoginResponse::class,
+            \App\Http\Responses\LoginResponse::class
+        );
+
+        //Register
+        // Fortify::registerView(function () {
+        //     return view('auth.register');
+        // });
+
+        Fortify::redirects('register', '/');
+
+        //Lupa Password
+        Fortify::requestPasswordResetLinkView(function () {
+            return view('auth.forgot-password');
+        });
+
+        // Reset Password
+        Fortify::resetPasswordView(function ($request) {
+            return view('auth.reset-password', ['request' => $request]);
+        });
     }
 }

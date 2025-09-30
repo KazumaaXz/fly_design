@@ -12,8 +12,7 @@
         <div class="col-md-12">
             <div class="d-flex justify-content-between align-items-center mb-3">
                 {{-- Form Pencarian dan Filter Status --}}
-                <form action="{{ route('admin.product.index') }}" method="GET"
-                    class="d-flex me-3">
+                <form action="{{ route('admin.product.index') }}" method="GET" class="d-flex me-3">
                     <input type="text" name="search" class="form-control form-control-sm me-2"
                         placeholder="Cari Produk..." value="{{ request('search') }}">
                     <select name="status" class="form-select form-select-sm me-2" style="max-width: 150px;">
@@ -21,11 +20,10 @@
                         <option value="1" {{ request('status') === '1' ? 'selected' : '' }}>Published</option>
                         <option value="0" {{ request('status') === '0' ? 'selected' : '' }}>Draft</option>
                     </select>
-                    {{-- Filter berdasarkan Jenis Dihapus --}}
                     <button type="submit" class="btn btn-sm btn-outline-secondary">
                         Cari
                     </button>
-                    @if (request('search') || request('status') !== null) {{-- Kondisi disesuaikan --}}
+                    @if (request('search') || request('status') !== null)
                         <a href="{{ route('admin.product.index') }}" class="btn btn-sm btn-outline-danger ms-2">
                             Reset
                         </a>
@@ -61,14 +59,14 @@
                         <tbody>
                             @foreach ($products as $val)
                                 <tr>
-                                    <td class="text-center">{{ $loop->iteration + (($products->currentPage() ?? 1) - 1) * ($products->perPage() ?? 10) }}</td>
+                                    <td class="text-center">
+                                        {{ $loop->iteration + (($products->currentPage() ?? 1) - 1) * ($products->perPage() ?? 10) }}
+                                    </td>
                                     <td>
-                                        <a href="{{ route('admin.product.show', $val->slug) }}"
-                                            class="text-decoration-none">
+                                        <a href="{{ route('admin.product.show', $val) }}" class="text-decoration-none">
                                             {{ $val->title }}
                                         </a>
                                     </td>
-                                    {{-- Data Jenis Dihapus --}}
                                     <td>{{ $val->user->name ?? '-' }}</td>
                                     <td class="text-center">
                                         @if ($val->status)
@@ -83,23 +81,22 @@
                                     <td class="text-center">{{ $val->discount ?? '0' }}%</td>
                                     <td>{{ $val->sku ?? '-' }}</td>
                                     <td class="text-center">
-                                        <a href="{{ route('admin.product.show', $val->slug) }}"
+                                        <a href="{{ route('admin.product.show', $val) }}"
                                             class="btn btn-sm btn-info text-white" title="Lihat">
                                             <i class="fas fa-eye"></i>
                                         </a>
-                                        <a href="{{ route('admin.product.edit', $val->slug) }}"
-                                                class="btn btn-sm btn-warning mx-1" title="Edit">
-                                                <i class="fas fa-pencil"></i>
-                                            </a>
-                                            <form action="{{ route('admin.product.destroy', $val->slug) }}" method="POST"
-                                                class="d-inline">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button type="submit" class="btn btn-sm btn-danger" title="Hapus"
-                                                    onclick="return confirm('Apakah Anda yakin ingin menghapus Produk ini? Tindakan ini tidak dapat dibatalkan.')">
-                                                    <i class="fas fa-trash-alt"></i>
-                                                </button>
-                                            </form>
+                                        <a href="{{ route('admin.product.edit', $val) }}"
+                                            class="btn btn-sm btn-warning mx-1" title="Edit">
+                                            <i class="fas fa-pencil"></i>
+                                        </a>
+                                        <form action="{{ route('admin.product.destroy', $val) }}" method="POST" class="d-inline">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="btn btn-sm btn-danger" title="Hapus"
+                                                onclick="return confirm('Apakah Anda yakin ingin menghapus Produk ini? Tindakan ini tidak dapat dibatalkan.')">
+                                                <i class="fas fa-trash-alt"></i>
+                                            </button>
+                                        </form>
                                     </td>
                                 </tr>
                             @endforeach
@@ -107,7 +104,6 @@
                     </table>
                 </div>
 
-                {{-- Pagination --}}
                 <div class="d-flex justify-content-end">
                     {{ $products->links('pagination::bootstrap-4') }}
                 </div>

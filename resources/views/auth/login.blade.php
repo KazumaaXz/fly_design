@@ -5,7 +5,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Belajar Desain Grafis</title>
+    <title>FlyDesign</title>
     <!-- Bootstrap 5 CSS CDN -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Inter font from Google Fonts -->
@@ -183,17 +183,17 @@
                             <input class="form-check-input" type="checkbox" id="ingatKataSandi">
                             <label class="form-check-label" for="ingatKataSandi">Ingat kata Sandi</label>
                         </div>
-                        <a href="#" class="form-check-label text-decoration-none" style="color: #ffd700;">Lupa kata
+                        <a href="/forgot-password" class="form-check-label text-decoration-none" style="color: #ffd700;">Lupa kata
                             Sandi?</a>
                     </div>
                     <button type="submit" class="btn btn-masuk">Masuk</button>
                 </form>
                 <div class="mt-3 text-end">
-                    <a href="index.html" class="text-decoration-none" style="color:#ffd700;font-size:0.95rem;">Kembali
+                    <a href="/" class="text-decoration-none" style="color:#ffd700;font-size:0.95rem;">Kembali
                         ke Halaman Utama</a>
                 </div>
                 <div class="register-link">
-                    Belum Memiliki Akun? <a href="#">Daftar.</a>
+                    Belum Memiliki Akun? <a href="/register">Daftar</a>
                 </div>
             </div>
         </div>

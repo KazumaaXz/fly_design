@@ -33,7 +33,7 @@ class Product extends Model
     // Relasi ke jenis
     public function type()
     {
-        return $this->belongsTo(Type::class);
+        return $this->belongsTo(Type::class, 'type_id');
     }
 
     // Relasi ke kategori
@@ -45,5 +45,19 @@ class Product extends Model
     public function getRouteKeyName(): string
     {
         return 'slug';
+    }
+    //  Hitung harga setelah diskon
+    public function getFinalPriceAttribute()
+    {
+        if ($this->discount > 0) {
+            return $this->price - ($this->price * $this->discount / 100);
+        }
+        return $this->price;
+    }
+
+    //  Persentase diskon
+    public function getDiscountPercentageAttribute()
+    {
+        return $this->discount ?? 0;
     }
 }

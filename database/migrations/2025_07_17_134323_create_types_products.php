@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('types', function (Blueprint $table) {
             $table->id();
-            $table->string('name')->unique(); 
+            $table->string('name')->nullable()->unique(); 
             $table->string('slug', 191)->unique(); // BARIS INI YANG DIUBAH
             $table->timestamps();
         });

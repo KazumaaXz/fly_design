@@ -24,26 +24,40 @@
                     <form action="{{ route('admin.product.store') }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         <div class="row">
+                            {{-- Nama Produk --}}
                             <div class="col-lg-12 mb-2">
-                                <label for="judul_produk" class="form-label">Nama Produk</label>
-                                <input type="text" class="form-control @error('judul_produk') is-invalid @enderror"
-                                    id="judul_produk" name="title" value="{{ old('judul_produk') }}" required>
-                                @error('judul_produk')
+                                <label for="title" class="form-label">Nama Produk</label>
+                                <input type="text" class="form-control @error('title') is-invalid @enderror"
+                                    id="title" name="title" value="{{ old('title') }}" required>
+                                @error('title')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
                             </div>
+
+                            <div class="col-lg-12 mb-2">
+                                <label for="meta_desc" class="form-label">Meta Deskripsi</label>
+                                <input type="text" class="form-control @error('meta_desc') is-invalid @enderror"
+                                    id="meta_desc" name="meta_desc" value="{{ old('meta_desc') }}" required>
+                                @error('meta_desc')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+
+                            {{-- Kategori (type_id) sudah benar --}}
                             <div class="col-lg-6 mb-2">
-                                <label for="category_id" class="form-label">Kategori</label>
-                                <select name="category_id">
-                                    @foreach ($categories as $category)
-                                        <option value="{{ $category->id }}">{{ $category->name }}</option>
+                                <label for="type_id" class="form-label">Kategori</label>
+                                <select class="form-select @error('type_id') is-invalid @enderror" id="type_id"
+                                    name="type_id" required>
+                                    @foreach ($types as $type)
+                                        <option value="{{ $type->id }}">{{ $type->name }}</option>
                                     @endforeach
                                 </select>
-                                </select>
-                                @error('category_id')
+                                @error('type_id')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
                             </div>
+
+                            {{-- SKU sudah benar --}}
                             <div class="col-lg-6 mb-2">
                                 <label for="sku" class="form-label">SKU</label>
                                 <input type="text" class="form-control @error('sku') is-invalid @enderror" id="sku"
@@ -52,64 +66,74 @@
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
                             </div>
+
+                            {{-- Harga Awal --}}
                             <div class="col-lg-6 mb-2">
                                 <label for="harga_awal" class="form-label">Harga Awal (Rp)</label>
-                                <input type="number" class="form-control @error('harga_awal') is-invalid @enderror"
-                                    id="harga_awal" name="harga_awal" value="{{ old('harga_awal') }}" min="0"
-                                    required>
-                                @error('harga_awal')
+                                <input type="number" class="form-control @error('price') is-invalid @enderror"
+                                    id="harga_awal" name="price" value="{{ old('price') }}" min="0" required>
+                                @error('price')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
                             </div>
+
+                            {{-- Diskon --}}
                             <div class="col-lg-6 mb-2">
                                 <label for="diskon" class="form-label">Diskon (%)</label>
-                                <input type="number" class="form-control @error('diskon') is-invalid @enderror"
-                                    id="diskon" name="diskon" value="{{ old('diskon', 0) }}" min="0"
+                                <input type="number" class="form-control @error('discount') is-invalid @enderror"
+                                    id="diskon" name="discount" value="{{ old('discount', 0) }}" min="0"
                                     max="100">
-                                @error('diskon')
+                                @error('discount')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
                             </div>
-                            {{-- Harga Setelah Diskon biasanya dihitung di backend atau dengan JS, tidak diinput langsung --}}
+
+                            {{-- Stok --}}
                             <div class="col-lg-12 mb-2">
                                 <label for="stok" class="form-label">Stok</label>
-                                <input type="number" class="form-control @error('stok') is-invalid @enderror"
-                                    id="stok" name="stok" value="{{ old('stok', 0) }}" min="0" required>
-                                @error('stok')
+                                <input type="number" class="form-control @error('stock') is-invalid @enderror"
+                                    id="stok" name="stock" value="{{ old('stock', 0) }}" min="0" required>
+                                @error('stock')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
                             </div>
+
+                            {{-- Gambar Produk --}}
                             <div class="col-lg-12 mb-2">
                                 <label for="gambar_produk" class="form-label">Gambar Produk</label>
-                                <input type="file" class="form-control @error('gambar_produk') is-invalid @enderror"
-                                    id="gambar_produk" name="image[]" multiple accept="image/*">
-                                @error('gambar_produk')
+                                <input type="file" class="form-control @error('image') is-invalid @enderror"
+                                    id="gambar_produk" name="image" accept="image/*">
+                                @error('image')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
                             </div>
+
+                            {{-- Deskripsi Produk --}}
                             <div class="col-lg-12 mb-2">
                                 <label for="deskripsi_produk" class="form-label">Deskripsi Produk</label>
-                                <textarea class="form-control @error('deskripsi_produk') is-invalid @enderror" id="deskripsi_produk"
-                                    name="deskription" rows="10" required>{{ old('deskripsi_produk') }}</textarea>
-                                @error('deskripsi_produk')
+                                <textarea class="form-control @error('description') is-invalid @enderror" id="deskripsi_produk" name="description"
+                                    rows="10" required>{{ old('description') }}</textarea>
+                                @error('description')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
                             </div>
+
+                            {{-- Status Produk sudah benar --}}
                             <div class="mb-2">
                                 <label class="form-label">Status Produk</label>
                                 <div class="d-flex">
                                     <div class="form-check me-3">
                                         <input class="form-check-input @error('status') is-invalid @enderror" type="radio"
-                                            name="status" id="statusDraft" value="Draft"
-                                            {{ old('status', 'Draft') == 'Draft' ? 'checked' : '' }}>
+                                            name="status" id="statusDraft" value="0"
+                                            {{ old('status', 0) == 0 ? 'checked' : '' }}>
                                         <label class="form-check-label" for="statusDraft">
                                             Draft
                                         </label>
                                     </div>
                                     <div class="form-check">
                                         <input class="form-check-input @error('status') is-invalid @enderror"
-                                            type="radio" name="status" id="statusPublished" value="Published"
-                                            {{ old('status', 'Draft') == 'Published' ? 'checked' : '' }}>
+                                            type="radio" name="status" id="statusPublished" value="1"
+                                            {{ old('status', 0) == 1 ? 'checked' : '' }}>
                                         <label class="form-check-label" for="statusPublished">
                                             Published
                                         </label>
@@ -119,6 +143,7 @@
                                     <div class="invalid-feedback d-block">{{ $message }}</div>
                                 @enderror
                             </div>
+
                         </div>
                         <br>
                         <button type="submit" class="btn btn-primary">Simpan Produk</button>
